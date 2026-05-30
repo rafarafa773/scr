@@ -1,6 +1,16 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+void print_with_highlight(const std::string& line, const std::string& target) {
+	size_t pos = line.find(target);
+	if (pos == std::string::npos) {
+		std::cout << line << "\n";
+		return;
+    }
+	std::cout << line.substr(0, pos);
+	std::cout << "\033[31m" << target << "\033[0m";
+	std::cout << line.substr(pos + target.length()) << "\n";
+}
 
 struct file_obj {
 	int lines = 0;
@@ -26,6 +36,7 @@ struct file_obj {
 		chars_of_file = 0;
 		while (std::getline(file1, line1)) {
 			chars_of_file += line1.size();
+			chars_of_file++;
 		}
 		return (int)chars_of_file;
 	}
@@ -63,11 +74,20 @@ int main(int argc, char *file_passed[]) {
 
 	file_obj test1;
 	if (argc > 2) {
-		if ((std::string)file_passed[2] == "show") {
+		if ((std::string)file_passed[2] == "show" and argc < 3) {
 			test1.show_all(file);
 		} else if ((std::string)file_passed[2] == "count") {
 			std::cout << "lines: " << test1.count_lines(file) << "\n";
 			std::cout << "chars: " << test1.count_chars(file) << "\n";
+		} else if ((std::string)file_passed[2] == "show" and argc > 3) {
+			std::string busca = file_passed[3];
+			std::string linha_temp;
+			test1.reset_stream(file);
+			while (std::getline(file, linha_temp)) {
+				if (linha_temp.contains(busca)) {
+					print_with_highlight(linha_temp, busca);
+				}
+			}
 		}
 	}
 	return 0;
