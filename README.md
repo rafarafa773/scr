@@ -8,5 +8,5 @@ to use run
 ```bash
 ./reader --help
 ```
-still in development
+still in development \
 made in brazil
