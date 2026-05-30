@@ -56,6 +56,11 @@ int main(int argc, char *file_passed[]) {
 		std::cout << "version: " << version << "\n";
 		return 0;
 	}
+	
+	if (argc > 1 && (std::string)file_passed[1] == "--help") {
+		std::cout << "you can use show to see the archive, show \"string\" searchs a string\nand use count to, well, count\nand the format is " << file_passed[0] << " <file> <option>\n";
+		return 0;
+	}
 
 	if (argc < 2) {
 		std::cout << "mate, provide a file.\n";
