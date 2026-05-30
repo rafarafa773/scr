@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <iomanip>
 void print_with_highlight(const std::string& line, const std::string& target) {
 	size_t pos = line.find(target);
 	if (pos == std::string::npos) {
@@ -79,7 +80,7 @@ int main(int argc, char *file_passed[]) {
 
 	file_obj test1;
 	if (argc > 2) {
-		if ((std::string)file_passed[2] == "show" and argc < 3) {
+		if ((std::string)file_passed[2] == "show" and argc == 3) {
 			test1.show_all(file);
 		} else if ((std::string)file_passed[2] == "count") {
 			std::cout << "lines: " << test1.count_lines(file) << "\n";
@@ -92,6 +93,15 @@ int main(int argc, char *file_passed[]) {
 				if (linha_temp.contains(busca)) {
 					print_with_highlight(linha_temp, busca);
 				}
+			}
+		} else if ((std::string)file_passed[2] == "hex") {
+			std::string linha_temp;
+			test1.reset_stream(file);
+			while (std::getline(file, linha_temp)) {
+				for(unsigned char c : linha_temp) {
+					std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
+				}
+				std::cout << "\n";
 			}
 		}
 	}
