@@ -28,15 +28,15 @@ struct file_obj {
 		std::cout << "usage: " << prog_name << " <file> <option>\n\n"
 				  << "commands:\n"
 				  << "  list [dir]   : list files in directory (default: .)\n"
-				  << "  whore        : print current working directory\n"
+				  << "  whihi        : print current working directory\n"
 				  << "  change <dir> : change working directory\n"
 				  << "  show         : display file content\n"
 				  << "  show <str>   : search for a string in file\n"
 				  << "  count        : count lines and characters\n"
 				  << "  hex          : display file in hexadecimal\n"
 				  << "  rm           : remove the file (dangerous!)\n"
-				  << "  tocar		 : make a file\n"
-				  << "  tocar_legal	 : make a directory\n"
+				  << "  tocar        : make a file\n"
+				  << "  tocar_legal  : make a directory\n"
 				  << "  modify       : write text\n";
 		return 0;
 	}
@@ -126,7 +126,7 @@ int main(int argc, char *file_passed[]) {
 		obj1.help(file_passed[0]);
 		return 0;
     }
-	if (argc > 1 && (std::string)file_passed[1] == "whore") {
+	if (argc > 1 && (std::string)file_passed[1] == "whihi") {
 		file_obj test1;
 		test1.print_dir();
 		return 0;
