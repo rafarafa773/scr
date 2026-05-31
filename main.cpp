@@ -59,6 +59,17 @@ struct file_obj {
 			return 1;
 		}
 	}
+	void print_dir() {
+			std::cout << std::filesystem::current_path().string() << "\n";
+	}
+
+	int change1(const std::string& new_path) {
+		std::filesystem::current_path(new_path);
+		std::cout << "changed to: " << std::filesystem::current_path().string() << "\n";
+		return 0;
+	}
+
+
 
 	void show_all(std::ifstream& file1) {
 		reset_stream(file1);
@@ -69,7 +80,7 @@ struct file_obj {
 };
 
 int main(int argc, char *file_passed[]) {
-	double version = 0.2;
+	double version = 0.21;
 
 	if (argc > 1 && (std::string)file_passed[1] == "--version") {
 		std::cout << "version: " << version << "\n";
@@ -77,14 +88,32 @@ int main(int argc, char *file_passed[]) {
 	}
 	
 	if (argc > 1 && (std::string)file_passed[1] == "--help") {
-		std::cout << "you can use show to see the archive, show \"string\" searchs a string\n"
-				  << "and use count to, well, count\n"
-				  << "hex shows the hexadecimal of the file\n"
-				  << "rm removes the file (beware!)\n"
-				  << "ls list all file in a directory\n"
-				  << "and the format is " << file_passed[0] << " <file> <option>\n";
+		std::cout << "usage: " << file_passed[0] << " <file> <option>\n\n"
+				  << "commands:\n"
+				  << "  list [dir]   : list files in directory (default: .)\n"
+				  << "  whore        : print current working directory\n"
+				  << "  change <dir> : change working directory\n"
+				  << "  show         : display file content\n"
+				  << "  show <str>   : search for a string in file\n"
+				  << "  count        : count lines and characters\n"
+				  << "  hex          : display file in hexadecimal\n"
+				  << "  rm           : remove the file (dangerous!)\n";
+        return 0;
+    }
+	if (argc > 1 && (std::string)file_passed[1] == "whore") {
+		file_obj test1;
+		test1.print_dir();
 		return 0;
 	}
+	if (argc > 1 && (std::string)file_passed[1] == "change") {
+		if (argc < 3) {
+			std::cout << "your stupid\n";
+			return 1;
+		}
+		file_obj test1;
+		test1.change1(file_passed[2]);
+		return 0;
+	} /*this shit dont works*/
 
 	if (argc < 2) {
 		std::cout << "mate, provide a file.\n";
