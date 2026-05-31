@@ -1,6 +1,8 @@
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <filesystem>
 #include <iomanip>
 void print_with_highlight(const std::string& line, const std::string& target) {
 	size_t pos = line.find(target);
@@ -32,14 +34,30 @@ struct file_obj {
 		return lines;
 	}
 
-	int count_chars(std::ifstream& file1) {
+	size_t count_chars(std::ifstream& file1) {
 		reset_stream(file1);
 		chars_of_file = 0;
 		while (std::getline(file1, line1)) {
 			chars_of_file += line1.size();
 			chars_of_file++;
 		}
-		return (int)chars_of_file;
+		return chars_of_file;
+	}
+	void list_files(const std::string& directory_path = ".") {
+			for (const auto& entry : std::filesystem::directory_iterator(directory_path)) {
+				std::cout << entry.path().filename().string() << "\n";
+			}
+	}
+
+	int remove_archive(std::string name_of_archive) {
+		std::filesystem::path path1 = name_of_archive;
+		if(std::filesystem::remove(path1)) {
+			std::cout << name_of_archive << " removed\n";
+			return 0;
+		} else {
+			std::cout << "error\n";
+			return 1;
+		}
 	}
 
 	void show_all(std::ifstream& file1) {
@@ -51,7 +69,7 @@ struct file_obj {
 };
 
 int main(int argc, char *file_passed[]) {
-	double version = 0.1;
+	double version = 0.2;
 
 	if (argc > 1 && (std::string)file_passed[1] == "--version") {
 		std::cout << "version: " << version << "\n";
@@ -59,13 +77,24 @@ int main(int argc, char *file_passed[]) {
 	}
 	
 	if (argc > 1 && (std::string)file_passed[1] == "--help") {
-		std::cout << "you can use show to see the archive, show \"string\" searchs a string\nand use count to, well, count\nand the format is " << file_passed[0] << " <file> <option>\n";
+		std::cout << "you can use show to see the archive, show \"string\" searchs a string\n"
+				  << "and use count to, well, count\n"
+				  << "hex shows the hexadecimal of the file\n"
+				  << "rm removes the file (beware!)\n"
+				  << "ls list all file in a directory\n"
+				  << "and the format is " << file_passed[0] << " <file> <option>\n";
 		return 0;
 	}
 
 	if (argc < 2) {
 		std::cout << "mate, provide a file.\n";
 		return 1;
+	}
+	if (argc > 1 && (std::string)file_passed[1] == "list") {
+    	std::string dir_path = (argc > 2) ? file_passed[2] : ".";
+    	file_obj test1;
+   		test1.list_files(dir_path);
+		return 0;
 	}
 	
 	if (argc == 2) {
@@ -79,6 +108,8 @@ int main(int argc, char *file_passed[]) {
 	}
 
 	file_obj test1;
+	
+
 	if (argc > 2) {
 		if ((std::string)file_passed[2] == "show" and argc == 3) {
 			test1.show_all(file);
@@ -103,6 +134,8 @@ int main(int argc, char *file_passed[]) {
 				}
 				std::cout << "\n";
 			}
+		} else if((std::string)file_passed[2] == "rm") {
+			test1.remove_archive(file_passed[1]);
 		}
 	}
 	return 0;
