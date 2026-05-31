@@ -34,7 +34,10 @@ struct file_obj {
 				  << "  show <str>   : search for a string in file\n"
 				  << "  count        : count lines and characters\n"
 				  << "  hex          : display file in hexadecimal\n"
-				  << "  rm           : remove the file (dangerous!)\n";
+				  << "  rm           : remove the file (dangerous!)\n"
+				  << "  tocar		 : make a file\n"
+				  << "  tocar_legal	 : make a directory\n"
+				  << "  modify       : write text\n";
 		return 0;
 	}
 
@@ -73,7 +76,7 @@ struct file_obj {
 		}
 	}
 	void print_dir() {
-			std::cout << std::filesystem::current_path().string() << "\n";
+		std::cout << std::filesystem::current_path().string() << "\n";
 	}
 
 	int change1(const std::string& new_path) {
@@ -111,7 +114,7 @@ struct file_obj {
 };
 
 int main(int argc, char *file_passed[]) {
-	double version = 0.2;
+	double version = 0.23;
 
 	if (argc > 1 && (std::string)file_passed[1] == "--version") {
 		std::cout << "version: " << version << "\n";
@@ -121,7 +124,7 @@ int main(int argc, char *file_passed[]) {
 	if (argc > 1 && (std::string)file_passed[1] == "--help") {
 		file_obj obj1;
 		obj1.help(file_passed[0]);
-        return 0;
+		return 0;
     }
 	if (argc > 1 && (std::string)file_passed[1] == "whore") {
 		file_obj test1;
@@ -152,12 +155,24 @@ int main(int argc, char *file_passed[]) {
 	if (argc == 2) {
 		std::cout << "are you dumb? use count or show.\n";
 	}
-
+	if (argc > 2 && (std::string)file_passed[2] == "tocar") {
+		std::ofstream arquivo(file_passed[1]);
+		if (arquivo.is_open()) {
+			return 0;
+		} else {
+			std::cout << "error\n";
+			return 1;
+		}
+	}
+	if(argc > 2 and (std::string)file_passed[2]=="tocar_legal") {
+		std::filesystem::create_directory(file_passed[1]);
+	}
 	std::ifstream file(file_passed[1]); 
 	if(!file.is_open()) {
 		std::cout << "mate, that file doesn't exist.\n";
 		return 1;
 	}
+	
 
 	file_obj test1;
 
@@ -187,6 +202,13 @@ int main(int argc, char *file_passed[]) {
 			}
 		} else if((std::string)file_passed[2] == "rm") {
 			test1.remove_archive(file_passed[1]);
+		} else if((std::string)file_passed[2]=="modify") {
+			std::string linhatem1;
+			file.close();
+			std::ofstream arqyuvis(file_passed[1], std::ios::app);
+			while (std::getline(std::cin, linhatem1)) {
+				arqyuvis << linhatem1 << "\n";
+			}
 		}
 	}
 	return 0;
