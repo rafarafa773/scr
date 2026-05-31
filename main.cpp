@@ -24,6 +24,19 @@ struct file_obj {
 		file1.clear();
 		file1.seekg(0);
 	}
+	int help(char* prog_name) {
+		std::cout << "usage: " << prog_name << " <file> <option>\n\n"
+				  << "commands:\n"
+				  << "  list [dir]   : list files in directory (default: .)\n"
+				  << "  whore        : print current working directory\n"
+				  << "  change <dir> : change working directory\n"
+				  << "  show         : display file content\n"
+				  << "  show <str>   : search for a string in file\n"
+				  << "  count        : count lines and characters\n"
+				  << "  hex          : display file in hexadecimal\n"
+				  << "  rm           : remove the file (dangerous!)\n";
+		return 0;
+	}
 
 	int count_lines(std::ifstream& file1) {
 		reset_stream(file1);
@@ -77,10 +90,28 @@ struct file_obj {
 			std::cout << line1 << "\n";
 		}
 	}
+	/*
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	compensating lines lalalala
+	*/
 };
 
 int main(int argc, char *file_passed[]) {
-	double version = 0.21;
+	double version = 0.2;
 
 	if (argc > 1 && (std::string)file_passed[1] == "--version") {
 		std::cout << "version: " << version << "\n";
@@ -88,16 +119,8 @@ int main(int argc, char *file_passed[]) {
 	}
 	
 	if (argc > 1 && (std::string)file_passed[1] == "--help") {
-		std::cout << "usage: " << file_passed[0] << " <file> <option>\n\n"
-				  << "commands:\n"
-				  << "  list [dir]   : list files in directory (default: .)\n"
-				  << "  whore        : print current working directory\n"
-				  << "  change <dir> : change working directory\n"
-				  << "  show         : display file content\n"
-				  << "  show <str>   : search for a string in file\n"
-				  << "  count        : count lines and characters\n"
-				  << "  hex          : display file in hexadecimal\n"
-				  << "  rm           : remove the file (dangerous!)\n";
+		file_obj obj1;
+		obj1.help(file_passed[0]);
         return 0;
     }
 	if (argc > 1 && (std::string)file_passed[1] == "whore") {
@@ -137,7 +160,6 @@ int main(int argc, char *file_passed[]) {
 	}
 
 	file_obj test1;
-	
 
 	if (argc > 2) {
 		if ((std::string)file_passed[2] == "show" and argc == 3) {
