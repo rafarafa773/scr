@@ -1,10 +1,10 @@
 # Simple C++ Reader
-to compile clone the repository and use 
+to use it clone the repository and use 
 ```bash
 make
 ./reader
 ```
-to use run
+and to run
 ```bash
 ./reader --help
 ```
