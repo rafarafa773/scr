@@ -1,4 +1,4 @@
-# Simple C++ Reader
+# simple c++ reader
 to use it clone the repository and use 
 ```bash
 make
