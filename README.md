@@ -9,4 +9,4 @@ and to run
 ./reader --help
 ```
 still in development \
-made in brazil
+made in uruguay
