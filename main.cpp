@@ -12,7 +12,7 @@ void imprimir_con_resaltado(const std::string& linea, const std::string& objetiv
 		return;
     }
 	std::cout << linea.substr(0, pos);
-	std::cout << "\033[31m" << objetivo << "\033[0m";
+	std::cout << "[RESEALTADO]" << objetivo << "[/RESALTADO]";
 	std::cout << linea.substr(pos + objetivo.length()) << "\n";
 }
 
@@ -35,7 +35,7 @@ struct objeto_archivo {
 				  << "  show <str>     : buscar un string en el archivo\n"
 				  << "  count          : contar lineas y caracteres\n"
 				  << "  hex            : mostrar archivo en hexadecimal\n"
-				  << "  rm             : eliminar el archivo (¡peligroso!)\n"
+				  << "  rm             : eliminar el archivo (!peligroso!)\n"
 				  << "  tocar          : crear un archivo\n"
 				  << "  tocar_legal    : crear un directorio\n"
 				  << "  modify         : escribir texto\n";
@@ -92,7 +92,7 @@ struct objeto_archivo {
 			std::cout << linea1 << "\n";
 		}
 	}
-	/* compensando líneas boludeces 
+	/* compensando lineas boludeces 
 	... 
 	*/
 };
@@ -126,7 +126,7 @@ int main(int argc, char *archivo_pasado[]) {
 	}
 
 	if (argc < 2) {
-		std::cout << "che, proveé un archivo.\n";
+		std::cout << "che, provee un archivo.\n";
 		return 1;
 	}
 	if (argc > 1 && (std::string)archivo_pasado[1] == "list") {
@@ -137,7 +137,7 @@ int main(int argc, char *archivo_pasado[]) {
 	}
 	
 	if (argc == 2) {
-		std::cout << "¿sos bobo? usá count o show.\n";
+		std::cout << "?sos bobo? usa count o show.\n";
 	}
 	if (argc > 2 && (std::string)archivo_pasado[2] == "tocar") {
 		std::ofstream archivo(archivo_pasado[1]);
@@ -164,14 +164,14 @@ int main(int argc, char *archivo_pasado[]) {
 		if ((std::string)archivo_pasado[2] == "show" and argc == 3) {
 			prueba1.mostrar_todo(archivo);
 		} else if ((std::string)archivo_pasado[2] == "count") {
-			std::cout << "líneas: " << prueba1.contar_lineas(archivo) << "\n";
+			std::cout << "lineas: " << prueba1.contar_lineas(archivo) << "\n";
 			std::cout << "caracteres: " << prueba1.contar_caracteres(archivo) << "\n";
 		} else if ((std::string)archivo_pasado[2] == "show" and argc > 3) {
 			std::string busqueda = archivo_pasado[3];
 			std::string linea_temp;
 			prueba1.reiniciar_flujo(archivo);
 			while (std::getline(archivo, linea_temp)) {
-				if (linea_temp.contains(busqueda)) {
+				if (linea_temp.find(busqueda) != std::string::npos) {
 					imprimir_con_resaltado(linea_temp, busqueda);
 				}
 			}
