@@ -12,7 +12,7 @@ void imprimir_con_resaltado(const std::string& linea, const std::string& objetiv
 		return;
     }
 	std::cout << linea.substr(0, pos);
-	std::cout << "[RESEALTADO]" << objetivo << "[/RESALTADO]";
+	std::cout << "\033[31m" << objetivo << "\033[0m";
 	std::cout << linea.substr(pos + objetivo.length()) << "\n";
 }
 
