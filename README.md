@@ -10,3 +10,4 @@ and to run
 ```
 still in development \
 made in uruguay
+# | this package is NOT affiliated with (or supported by) GNU, coreutils, in any way
