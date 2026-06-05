@@ -1,12 +1,12 @@
-# simple c++ reader
-to use it clone the repository and use 
+# coreutils-uruguayo-bin
+to compile it clone the repository and use 
 ```bash
 make
-./reader
+./coreutils-uruguayo-bin
 ```
 and to run
 ```bash
-./reader --help
+./coreutils-uruguayo-bin --help
 ```
 still in development \
 made in uruguay
