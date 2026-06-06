@@ -8,6 +8,5 @@ and to run
 ```bash
 ./coreutils-uruguayo-bin --help
 ```
-still in development \
-made in uruguay
+still in development 
 # | this package is NOT affiliated with (or supported by) GNU, coreutils, in any way
